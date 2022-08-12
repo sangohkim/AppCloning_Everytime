@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:everytime_cloned/pages/sign_up.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+// helper class
 class ScaffoldSnackBar {
-  // helper class
   ScaffoldSnackBar(this._context);
 
   factory ScaffoldSnackBar.of(BuildContext context) {
@@ -86,62 +87,68 @@ class _LoginPage extends State<LoginPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        TextFormField(
-                            key: const ValueKey(1),
-                            controller: idController,
-                            decoration: const InputDecoration(
-                              hintText: '아이디',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
+                        SizedBox(
+                          height: 50,
+                          child: TextFormField(
+                              key: const ValueKey(1),
+                              controller: idController,
+                              decoration: const InputDecoration(
+                                hintText: '아이디',
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
                                 ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
                                 ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
                               ),
-                            ),
-                            validator: (String? value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text!!';
-                              }
-                              return null;
-                            }),
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text!!';
+                                }
+                                return null;
+                              }),
+                        ),
                         const SizedBox(height: 10),
-                        TextFormField(
-                            key: const ValueKey(2),
-                            controller: pwController,
-                            obscureText: true,
-                            decoration: const InputDecoration(
-                              hintText: '비밀번호',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
+                        SizedBox(
+                          height: 50,
+                          child: TextFormField(
+                              key: const ValueKey(2),
+                              controller: pwController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                hintText: '비밀번호',
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
                                 ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
                                 ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
                               ),
-                            ),
-                            validator: (String? value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text!!';
-                              }
-                              return null;
-                            }),
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter some text!!';
+                                }
+                                return null;
+                              }),
+                        ),
                         const SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width - 60,
@@ -183,13 +190,21 @@ class _LoginPage extends State<LoginPage> {
                               }),
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width - 60,
+                          height: 20,
                           child: GestureDetector(
                             onTap: () {
-                              isLoading ? null : null;
+                              if (!isLoading) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return SignUp();
+                                  }),
+                                );
+                              }
                             },
                             child: const Text(
                               "회원가입",
@@ -233,7 +248,7 @@ class _LoginPage extends State<LoginPage> {
         } on FirebaseAuthMultiFactorException catch (e) {
           setState(() {
             error = '${e.message}';
-            print(error);
+            ScaffoldSnackBar.of(context).show(error);
           });
         }
       } else {

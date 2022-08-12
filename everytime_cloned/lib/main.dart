@@ -4,7 +4,7 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:everytime_cloned/pages/login_page.dart';
-import 'package:everytime_cloned/pages/main_page.dart';
+import 'package:everytime_cloned/pages/bottom_control.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,11 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.black,
+      ),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return MainPage();
+            return const BottomControl();
           }
           return const LoginPage();
         },
