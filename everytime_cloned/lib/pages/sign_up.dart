@@ -258,6 +258,8 @@ class _SignUpState extends State<SignUp> {
           email: emailController.text,
           password: pwController.text,
         );
+        User user = _auth.currentUser!;
+        await user.updateDisplayName(idController.text);
         setIsLoading();
         setState(() {
           Navigator.pop(context);
