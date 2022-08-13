@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:everytime_cloned/pages/user_page.dart';
+import 'package:everytime_cloned/widgets/user_page.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
