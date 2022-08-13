@@ -4,7 +4,7 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:everytime_cloned/pages/login_page.dart';
-import 'package:everytime_cloned/pages/bottom_control.dart';
+import 'package:everytime_cloned/bottom_control.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

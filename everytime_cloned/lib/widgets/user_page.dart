@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:everytime_cloned/widgets/update_pw.dart';
+import 'package:everytime_cloned/widgets/update_email.dart';
+import 'package:everytime_cloned/widgets/update_id.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -94,7 +97,7 @@ class _UserPageState extends State<UserPage> {
                           ),
                         ),
                         Text(
-                          'NULL',
+                          '${user.email}',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 11,
@@ -166,7 +169,18 @@ class _UserPageState extends State<UserPage> {
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return UpdatePw();
+                              },
+                            ),
+                          );
+                        });
+                      },
                       child: Text(
                         '비밀번호 변경',
                         style: TextStyle(
@@ -179,7 +193,18 @@ class _UserPageState extends State<UserPage> {
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return UpdateEmail();
+                              },
+                            ),
+                          );
+                        });
+                      },
                       child: Text(
                         '이메일 변경',
                         style: TextStyle(
@@ -216,7 +241,14 @@ class _UserPageState extends State<UserPage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return UpdateId();
+                        }));
+                      });
+                    },
                     child: Text(
                       '닉네임 설정',
                       style: TextStyle(
@@ -481,6 +513,10 @@ class _UserPageState extends State<UserPage> {
                     child: GestureDetector(
                       onTap: () async {
                         await FirebaseAuth.instance.currentUser!.delete();
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc('${user.displayName}_ID')
+                            .delete();
                         setState(() {
                           Navigator.pop(context);
                         });
