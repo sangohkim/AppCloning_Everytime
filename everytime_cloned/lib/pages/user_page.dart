@@ -479,7 +479,12 @@ class _UserPageState extends State<UserPage> {
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        await FirebaseAuth.instance.currentUser!.delete();
+                        setState(() {
+                          Navigator.pop(context);
+                        });
+                      },
                       child: Text(
                         '회원 탈퇴',
                         style: TextStyle(
