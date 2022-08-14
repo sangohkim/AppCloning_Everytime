@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everytime_cloned/widgets/update_pw.dart';
 import 'package:everytime_cloned/widgets/update_email.dart';
-import 'package:everytime_cloned/widgets/update_id.dart';
+import 'package:everytime_cloned/widgets/update_nick.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -13,6 +13,8 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   late User user;
+  late DocumentReference docRef;
+  String userName = '', userNick = '';
   late TextEditingController controller;
 
   bool isLoading = false;
@@ -33,6 +35,19 @@ class _UserPageState extends State<UserPage> {
         });
       }
     });
+    docRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc('${user.displayName}_ID');
+    docRef.snapshots().listen((event) {
+      if (event != null && mounted) {
+        setState(() {
+          Map<String, dynamic> data = event.data()! as Map<String, dynamic>;
+          userName = data['userName'];
+          userNick = data['userNick'];
+        });
+      }
+    });
+
     super.initState();
   }
 
@@ -97,7 +112,7 @@ class _UserPageState extends State<UserPage> {
                           ),
                         ),
                         Text(
-                          '${user.email}',
+                          '${userName} / ${userNick}',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 11,

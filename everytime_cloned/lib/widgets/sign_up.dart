@@ -36,7 +36,10 @@ class _SignUpState extends State<SignUp> {
   TextEditingController pwController = TextEditingController();
   TextEditingController pwcController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController nickController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool isLoading = false;
 
   void setIsLoading() {
@@ -47,6 +50,9 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
         leading: TextButton(
           child: Text(
             '뒤로',
@@ -67,9 +73,6 @@ class _SignUpState extends State<SignUp> {
             },
           ),
         ],
-        backgroundColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false, // AppBar에 생기는 back arrow 없애주는 기능
       ),
       body: GestureDetector(
         onTap: () {
@@ -213,7 +216,66 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 Container(
+                  margin: EdgeInsets.only(top: 20),
+                  width: MediaQuery.of(context).size.width - 20,
+                  child: const Text(
+                    '개인 정보 입력',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                Container(
                   margin: EdgeInsets.only(top: 10),
+                  width: MediaQuery.of(context).size.width - 20,
+                  height: 125,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(3.0),
+                    children: <Widget>[
+                      Container(
+                        height: 60,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        child: TextFormField(
+                          key: const ValueKey(12),
+                          controller: nameController,
+                          decoration: const InputDecoration(
+                            hintText: '이름',
+                          ),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text!!';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Container(
+                        height: 60,
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: TextFormField(
+                          key: const ValueKey(13),
+                          controller: nickController,
+                          decoration: const InputDecoration(
+                            hintText: '닉네임',
+                          ),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text!!';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
                   width: MediaQuery.of(context).size.width - 20,
                   height: 50,
                   child: ElevatedButton(
@@ -249,7 +311,9 @@ class _SignUpState extends State<SignUp> {
           FirebaseFirestore.instance.collection('users');
       await users.doc('${idController.text}_ID').set({
         'userEmail': emailController.text,
-        'userName': idController.text,
+        'userId': idController.text,
+        'userNick': nickController.text,
+        'userName': nameController.text,
       }).catchError((error) {
         ScaffoldSnackBar.of(context).show(error);
       });

@@ -93,6 +93,7 @@ class _UpdatePwState extends State<UpdatePw> {
                 height: 45,
                 child: TextFormField(
                   key: ValueKey(8),
+                  obscureText: true,
                   controller: pwController,
                   decoration: InputDecoration(
                     hintText: '새 비밀번호',
@@ -122,6 +123,7 @@ class _UpdatePwState extends State<UpdatePw> {
                 height: 45,
                 child: TextFormField(
                   key: ValueKey(8),
+                  obscureText: true,
                   controller: pwcController,
                   decoration: InputDecoration(
                     hintText: '새 비밀번호 확인',
@@ -163,6 +165,7 @@ class _UpdatePwState extends State<UpdatePw> {
                 height: 45,
                 child: TextFormField(
                   key: ValueKey(8),
+                  obscureText: true,
                   controller: curpwController,
                   decoration: InputDecoration(
                     hintText: '현재 비밀번호',

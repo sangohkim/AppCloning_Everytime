@@ -132,6 +132,7 @@ class _UpdateEmailState extends State<UpdateEmail> {
                 height: 45,
                 child: TextFormField(
                   key: ValueKey(10),
+                  obscureText: true,
                   controller: pwController,
                   decoration: InputDecoration(
                     hintText: '계정 비밀번호',

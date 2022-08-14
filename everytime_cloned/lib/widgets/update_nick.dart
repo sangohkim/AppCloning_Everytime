@@ -34,6 +34,7 @@ class UpdateId extends StatefulWidget {
 class _UpdateIdState extends State<UpdateId> {
   TextEditingController idController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late DocumentReference docRef;
 
   bool isLoading = false;
 
@@ -79,7 +80,7 @@ class _UpdateIdState extends State<UpdateId> {
               Container(
                 margin: EdgeInsets.only(left: 10, top: 20, bottom: 10),
                 width: MediaQuery.of(context).size.width - 20,
-                child: Text(
+                child: const Text(
                   '닉네임',
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -95,13 +96,14 @@ class _UpdateIdState extends State<UpdateId> {
                   key: ValueKey(11),
                   controller: idController,
                   decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
+                    hintText: '새 닉네임',
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.grey,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.grey,
                       ),
